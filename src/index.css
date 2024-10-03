@@ -1,0 +1,29 @@
+/* src/App.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
+.catButton {
+  position: relative;
+}
+.catButton::after {
+  content: "";
+  width: 0%;
+  height: 2px;
+  position: absolute;
+  top: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.catButton:hover::after {
+  width: 100%;
+  transition: width 0.3s ease-in-out;
+}
