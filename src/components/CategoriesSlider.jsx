@@ -32,7 +32,7 @@ const CategoriesSlider = ({ categories }) => {
         <div className="flex justify-center">
           <button
             onClick={scrollLeft}
-            className="text-gray-700 p-2 rounded-md hover:bg-gray-200 transition duration-200"
+            className="text-gray-700 p-2 rounded-full hover:bg-gray-200 transition duration-200"
           >
             <img
               width="50"
@@ -61,7 +61,7 @@ const CategoriesSlider = ({ categories }) => {
           </div>
           <button
             onClick={scrollRight}
-            className="text-gray-700 p-2 rounded-md hover:bg-gray-200 transition duration-200"
+            className="text-gray-700 p-2 rounded-full hover:bg-gray-200 transition duration-200"
           >
             <img
               width="50"

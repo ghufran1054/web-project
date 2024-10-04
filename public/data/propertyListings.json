@@ -1,0 +1,252 @@
+[
+  {
+    "image": "https://picsum.photos/200/300?random=101",
+    "title": "Trendy Bungalow with Outdoor Space",
+    "type": "Entire apartment",
+    "guests": 2,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "price": "$205",
+    "rating": 3.3
+  },
+  {
+    "image": "https://picsum.photos/200/300??random=199",
+    "title": "Quaint Guesthouse by the River",
+    "type": "Guest suite",
+    "guests": 6,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "price": "$59",
+    "rating": 3.3
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=102",
+    "title": "Bright and Airy Room in Shared House",
+    "type": "Entire home",
+    "guests": 7,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "price": "$288",
+    "rating": 3.6
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=103",
+    "title": "Charming Studio with Vintage Decor",
+    "type": "Private room",
+    "guests": 5,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "price": "$274",
+    "rating": 4.3
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=1999",
+    "title": "Luxurious Beachfront Villa",
+    "type": "Cabin",
+    "guests": 9,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "price": "$215",
+    "rating": 3.2
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=104",
+    "title": "Stylish Studio Near the Park",
+    "type": "Entire home",
+    "guests": 5,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "price": "$148",
+    "rating": 3.3
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=105",
+    "title": "Unique Yurt Experience",
+    "type": "Guest suite",
+    "guests": 10,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "price": "$181",
+    "rating": 4.9
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=106",
+    "title": "Elegant Townhouse with Garden",
+    "type": "Guest suite",
+    "guests": 2,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "price": "$84",
+    "rating": 4.9
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=1077",
+    "title": "Stylish Studio Near the Park",
+    "type": "Entire apartment",
+    "guests": 3,
+    "bedrooms": 2,
+    "bathrooms": 4,
+    "price": "$133",
+    "rating": 3.5
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=1088",
+    "title": "Trendy Bungalow with Outdoor Space",
+    "type": "Entire apartment",
+    "guests": 9,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "price": "$127",
+    "rating": 4.2
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=1099",
+    "title": "Unique Yurt Experience",
+    "type": "Entire apartment",
+    "guests": 5,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "price": "$196",
+    "rating": 3.3
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=110",
+    "title": "Chic Condo in Trendy Neighborhood",
+    "type": "Cabin",
+    "guests": 4,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "price": "$108",
+    "rating": 3.2
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=111",
+    "title": "Sleek Apartment with Free Parking",
+    "type": "Entire home",
+    "guests": 6,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "price": "$270",
+    "rating": 4.6
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=112",
+    "title": "Sleek Apartment with Free Parking",
+    "type": "Entire apartment",
+    "guests": 9,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "price": "$86",
+    "rating": 3.4
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=69",
+    "title": "Trendy Bungalow with Outdoor Space",
+    "type": "Private room",
+    "guests": 6,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "price": "$246",
+    "rating": 4.4
+  },
+  {
+    "image": "https://picsum.photos/200/300",
+    "title": "Bright Flat with Balcony",
+    "type": "Entire apartment",
+    "guests": 3,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "price": "$98",
+    "rating": 4.3
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=532",
+    "title": "Historical Mansion in the Heart of the City",
+    "type": "Cabin",
+    "guests": 6,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "price": "$198",
+    "rating": 4.8
+  },
+  {
+    "image": "https://picsum.photos/200/300",
+    "title": "Spacious Family Home",
+    "type": "Entire apartment",
+    "guests": 4,
+    "bedrooms": 5,
+    "bathrooms": 4,
+    "price": "$170",
+    "rating": 3.0
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=6969",
+    "title": "Luxurious Beachfront Villa",
+    "type": "Cabin",
+    "guests": 2,
+    "bedrooms": 2,
+    "bathrooms": 4,
+    "price": "$206",
+    "rating": 3.5
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=98",
+    "title": "Chic Condo in Trendy Neighborhood",
+    "type": "Entire home",
+    "guests": 10,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "price": "$144",
+    "rating": 3.0
+  },
+  {
+    "image": "https://picsum.photos/200/300",
+    "title": "Trendy Bungalow with Outdoor Space",
+    "type": "Shared room",
+    "guests": 1,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "price": "$106",
+    "rating": 4.8
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=234",
+    "title": "Unique Yurt Experience",
+    "type": "Entire apartment",
+    "guests": 9,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "price": "$90",
+    "rating": 3.8
+  },
+  {
+    "image": "https://picsum.photos/200/300",
+    "title": "Bright and Airy Room in Shared House",
+    "type": "Private room",
+    "guests": 9,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "price": "$261",
+    "rating": 4.0
+  },
+  {
+    "image": "https://picsum.photos/200/300?random=432",
+    "title": "Contemporary Home with Fire Pit",
+    "type": "Cabin",
+    "guests": 5,
+    "bedrooms": 3,
+    "bathrooms": 4,
+    "price": "$249",
+    "rating": 3.4
+  },
+  {
+    "image": "https://picsum.photos/200/300",
+    "title": "Bright and Airy Room in Shared House",
+    "type": "Cabin",
+    "guests": 2,
+    "bedrooms": 3,
+    "bathrooms": 4,
+    "price": "$276",
+    "rating": 4.1
+  }
+]
