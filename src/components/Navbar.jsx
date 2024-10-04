@@ -1,7 +1,7 @@
 import SearchBar from "./SearchBar";
 const Navbar = () => {
   return (
-    <div className="bg-white  p-4 border-b-2 flex-col justify-center item-center">
+    <div className="bg-white  p-4 border-b-2 flex-col justify-center item-center space-y-4">
       <nav>
         <div className="px-10 flex justify-between  items-center">
           {/* Logo on the extreme left */}
