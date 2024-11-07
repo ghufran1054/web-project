@@ -1,10 +1,12 @@
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
-import Navbar from "./components/Navbar";
-import CategoriesSlider from "./components/CategoriesSlider";
-import ListingsContainer from "./components/Listings";
-import Footer from "./components/Footer";
+import Homepage from "./pages/Homepage";
+import { ListingsProvider } from "./contexts/listingsContext";
+import ListingDetails from "./pages/ListingDetails";
+import BookingPage from "./pages/BookingPage";
+import Header from "./components/Header";
 
-CategoriesSlider;
 function App() {
   // Sample categories list with placeholder icons
   const categories = [
@@ -20,13 +22,16 @@ function App() {
     { name: "Getaways", icon: "🏖️" },
   ];
   return (
-    <>
-      <Navbar></Navbar>
-      <CategoriesSlider categories={categories}></CategoriesSlider>
-      <div className="flex justify-center mb-4"></div>
-      <ListingsContainer></ListingsContainer>
-      <Footer></Footer>
-    </>
+    <ListingsProvider>
+      <Router>
+        <Header categories={categories}></Header>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/listings/:id" element={<ListingDetails />} />
+          <Route path="/book/:id" element={<BookingPage />} />
+        </Routes>
+      </Router>
+    </ListingsProvider>
   );
 }
 

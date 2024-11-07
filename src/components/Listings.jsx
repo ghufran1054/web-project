@@ -1,25 +1,19 @@
 import ListingCard from './ListingCard';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { ListingsContext } from '../contexts/listingsContext';
+
 
 const ListingsContainer = () => {
-  const [listings, setListings] = useState([]);
+  const { listings, setListings } = useContext(ListingsContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchListings = async () => {
-      try {
-        const response = await fetch('/data/propertyListings.json');
-        const data = await response.json();
-        setListings(data);
-      } catch (error) {
-        console.error('Error fetching listings:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchListings();
-  }, []);
+    if (listings.length === 0) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  } , [listings]);
 
   if (loading) {
     return (
