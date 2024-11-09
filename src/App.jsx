@@ -6,6 +6,7 @@ import { ListingsProvider } from "./contexts/listingsContext";
 import ListingDetails from "./pages/ListingDetails";
 import BookingPage from "./pages/BookingPage";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   // Sample categories list with placeholder icons
@@ -30,6 +31,7 @@ function App() {
           <Route path="/listings/:id" element={<ListingDetails />} />
           <Route path="/book/:id" element={<BookingPage />} />
         </Routes>
+        <Footer></Footer>
       </Router>
     </ListingsProvider>
   );

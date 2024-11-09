@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { baseURL } from '../constants/api';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { baseURL } from "../constants/api";
+import PhotoAlbum from "../components/PhotoAlbum";
+import ReserveCard from "../components/ReserveCard";
 const ListingDetails = () => {
   const { id } = useParams();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch listing details directly from the API
     const fetchListingDetails = async () => {
       try {
         const response = await fetch(`${baseURL}/listings/${id}`);
@@ -34,46 +35,43 @@ const ListingDetails = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* Main Image */}
-      <img src={listing.image} alt={listing.title} className="w-full h-72 object-cover rounded-lg mb-4" />
+    <div className="max-w-7xl mx-auto p-6">
+      {/* Title */}
+      <h1 className="text-3xl font-bold mb-6">{listing.title}</h1>
 
-      {/* Title and Type */}
-      <h1 className="text-3xl font-semibold mb-1">{listing.title}</h1>
-      <p className="text-gray-600">{listing.type} · {listing.guests} guests · {listing.bedrooms} bedrooms · {listing.bathrooms} bathrooms</p>
+      {/* Photo Album */}
+      <PhotoAlbum images={[listing.image, ...listing.allImages]} />
 
-      {/* Price and Rating */}
-      <div className="flex items-center justify-between mt-4">
-        <span className="text-2xl font-bold">{listing.price} per night</span>
-        <span className="text-yellow-500 text-lg">⭐ {listing.rating}</span>
+      {/* Two-Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+        {/* Left Column: About This Place */}
+        <div className="lg:col-span-2">
+          {/* About This Place Section */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-semibold mb-4">About This Place</h2>
+            <p className="text-gray-700 leading-relaxed">{listing.description}</p>
+          </div>
+
+          {/* What This Place Offers Section */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">What This Place Offers</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
+              {listing.amenities.map((amenity, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <span className="text-gray-700">{amenity.amenity}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Reserve Card (Sticky) */}
+        <div className="relative">
+          <div className="lg:sticky top-80">
+            <ReserveCard pricePerNight={Number(listing.price.slice(1))} />
+          </div>
+        </div>
       </div>
-
-      {/* Description */}
-      <p className="mt-4 text-gray-700">{listing.description}</p>
-
-      {/* Image Gallery */}
-      {listing.allImages && (
-        <div className="mt-6 grid grid-cols-2 gap-4">
-          {listing.allImages.map((imgUrl, index) => (
-            <img key={index} src={imgUrl} alt={`Listing Image ${index + 1}`} className="w-full h-48 object-cover rounded-lg" />
-          ))}
-        </div>
-      )}
-
-      {/* Amenities */}
-      {listing.amenities && (
-        <div className="mt-6">
-          <h2 className="text-2xl font-semibold mb-2">Amenities</h2>
-          <ul className="grid grid-cols-2 gap-2">
-            {listing.amenities.map((amenity, index) => (
-              <li key={index} className="flex items-center space-x-2">
-                <span className="font-medium">{amenity.amenity}</span>
-                {amenity.description && <span className="text-gray-500">{amenity.description}</span>}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };

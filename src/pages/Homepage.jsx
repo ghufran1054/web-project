@@ -5,7 +5,6 @@ function Homepage() {
   return (
     <>
       <ListingsContainer></ListingsContainer>
-      <Footer></Footer>
     </>
   );
 }
