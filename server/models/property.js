@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const PropertySchema = new mongoose.Schema({
-    id: { type: Number, required: true, unique: true },
-    image: { type: String, required: true },
+    image: { type: String, default: '' },
     title: { type: String, required: true },
     type: { type: String, required: true }, // e.g., "Entire apartment"
     guests: { type: Number, required: true },
@@ -10,6 +9,7 @@ const PropertySchema = new mongoose.Schema({
     price: { type: String, required: true }, // e.g., "$205"
     rating: { type: Number, default: 0 },
     allImages: [{ type: String }], // Array of image URLs
+    isApproved: { type: Boolean, default: false },
     amenities: [
         {
             amenity: { type: String, required: true },

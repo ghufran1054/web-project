@@ -1,14 +1,27 @@
 import React, { useContext, useState } from "react";
 import SearchBar from "./SearchBar";
 import { AuthContext } from "../contexts/authContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   // State to check if user is logged in
   const { isLoggedIn, setIsLoggedIn, logout } = useContext(AuthContext);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   // State to toggle the dropdown menu
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const handlePostListing = () => {
+    
+    // Check if the user is logged in
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+
+    // If the user is logged in, navigate to the post-listing page
+    navigate("/post-listing");
+  }
 
   return (
     <div className="bg-white p-4 border-b-2 flex-col justify-center item-center space-y-4">
@@ -48,7 +61,7 @@ const Navbar = () => {
           {/* Right side: Airbnb your home, Language button, Profile and Hamburger dropdown */}
           <div className="flex flex-1 justify-end items-center space-x-4">
             {/* Airbnb your home button, hidden on small screens */}
-            <button className="text-gray-700 hover:text-black font-semibold hidden md:block">
+            <button onClick={handlePostListing} className="text-gray-700 hover:text-black font-semibold hidden md:block">
               Airbnb your home
             </button>
 
@@ -98,9 +111,6 @@ const Navbar = () => {
                       <button onClick={logout} className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
                         Log out
                       </button>
-                      <button>
-                        Add Listing
-                      </button>
                     </>
                   ) : (
                     <>
@@ -122,7 +132,10 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <SearchBar></SearchBar>
+
+
+      {/*Conditional rendering of SearchBar */}
+      {pathname === "/" && <SearchBar></SearchBar>}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
+import { baseURL } from "../constants/api";
 
 
 const Signup = () => {
@@ -27,7 +28,7 @@ const Signup = () => {
     try {
         // Change the username key to name
         formData.name = formData.username;
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch(`${baseURL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

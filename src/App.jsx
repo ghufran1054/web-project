@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import AuthProvider from "./contexts/authContext";
 import Signup from "./pages/SignupPage";
 import Login from "./pages/LoginPage";
+import PublishListingPage from "./pages/PublishListingPage";
 
 // Function to check if the current route matches the specified list
 const AppContent = () => {
@@ -41,6 +42,7 @@ const AppContent = () => {
         <Route path="/book/:id" element={<BookingPage />} />
         <Route path="/signup" element={<Signup />} /> 
         <Route path="/login" element={<Login />} /> 
+        <Route path="/post-listing" element={<PublishListingPage />} />
       </Routes>
       {/* Conditionally render Footer */}
       {!isExcludedRoute && <Footer></Footer>}

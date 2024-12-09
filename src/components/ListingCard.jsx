@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const ListingCard = ({ listing }) => {
   return (
     <Link 
-      to={`/listings/${listing.id}`}
+      to={`/listings/${listing._id}`}
       className="block transform transition duration-200 hover:scale-105"
     >
       <div className="w-full rounded-lg overflow-hidden shadow-lg bg-white hover:shadow-xl"
@@ -41,18 +40,5 @@ const ListingCard = ({ listing }) => {
   );
 };
 
-ListingCard.propTypes = {
-  listing: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    guests: PropTypes.number.isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    bathrooms: PropTypes.number.isRequired,
-    price: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-  }).isRequired,
-};
 
 export default ListingCard;
