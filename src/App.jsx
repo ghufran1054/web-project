@@ -11,11 +11,17 @@ import AuthProvider from "./contexts/authContext";
 import Signup from "./pages/SignupPage";
 import Login from "./pages/LoginPage";
 import PublishListingPage from "./pages/PublishListingPage";
+import AdminLogin from "./pages/AdminLoginPage";
+import AdminHomepage from "./pages/AdminHomePage";
+import AdminListingDetails from "./components/AdminListingDetail";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import ProfilePage from "./pages/ProfilePage";
 
 // Function to check if the current route matches the specified list
 const AppContent = () => {
   const location = useLocation();
-  const excludeRoutes = ["/login", "/signup"]; // List of routes to exclude header and footer
+  const excludeRoutes = ["/login", "/signup", "/admin/login"]; // List of routes to exclude header and footer
   const isExcludedRoute = excludeRoutes.includes(location.pathname);
 
   // Sample categories list with placeholder icons
@@ -36,6 +42,7 @@ const AppContent = () => {
     <>
       {/* Conditionally render the Header and Footer based on the current route */}
       {!isExcludedRoute && <Header categories={categories}></Header>}
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/listings/:id" element={<ListingDetails />} />
@@ -43,6 +50,11 @@ const AppContent = () => {
         <Route path="/signup" element={<Signup />} /> 
         <Route path="/login" element={<Login />} /> 
         <Route path="/post-listing" element={<PublishListingPage />} />
+        <Route path='/profile' element={<ProfilePage/>}></Route>
+        <Route path='/admin/login' element={<AdminLogin />} />
+        <Route path='/admin/dashboard' element={<AdminHomepage />}></Route>
+        <Route path='/admin/listings/:id' element={<AdminListingDetails/>}></Route>
+
       </Routes>
       {/* Conditionally render Footer */}
       {!isExcludedRoute && <Footer></Footer>}

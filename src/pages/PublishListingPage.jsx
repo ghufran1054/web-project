@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { baseURL } from "../constants/api";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css"; // Main stylesheet
+import "react-date-range/dist/theme/default.css"; // Theme stylesheet
 
 const StepAmenities = ({ formData, handleChange }) => {
   const [amenityName, setAmenityName] = useState("");
@@ -90,7 +93,7 @@ const StepAmenities = ({ formData, handleChange }) => {
 
 const PublishListingPage = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(5);
   const [formData, setFormData] = useState({
     name: "",
     type: "apartment",
@@ -101,42 +104,52 @@ const PublishListingPage = () => {
     bedrooms: "",
     images: [],
     price: "",
+    location: "",
+    availableDates: [
+      {
+        startDate: new Date(),
+        endDate: new Date(),
+      },
+    ],
   });
 
   const uploadImages = async (propertyId, images) => {
     const token = localStorage.getItem("token");
-  
+
     if (!token) {
       navigate("/login");
       return;
     }
-  
+
     const formData = new FormData();
     images.forEach((image) => {
       formData.append("images", image);
     });
-  
+
     try {
-      const response = await fetch(`${baseURL}/listings/upload-images/${propertyId}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-  
+      const response = await fetch(
+        `${baseURL}/listings/upload-images/${propertyId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
       if (response.status === 401) {
         navigate("/login");
         return;
       }
-  
+
       if (!response.ok) {
         throw new Error("Failed to upload images");
       }
-  
+
       const data = await response.json();
       console.log("Images uploaded successfully:", data);
-  
+
       // Optionally, update the UI with the uploaded images or redirect to another page
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -412,12 +425,67 @@ const PublishListingPage = () => {
         );
 
       case 5:
-        nextDisabled = formData.price === "";
+        nextDisabled =
+          formData.price === "" ||
+          formData.location === "" ||
+          formData.availableDates.length === 0;
+
         return (
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold text-gray-800">
-              Set Your Price
+              Set Location, Availability, and Price
             </h2>
+
+            {/* Location Input */}
+            <div>
+              <label className="block font-medium text-gray-700">
+                Location
+              </label>
+              <input
+                type="text"
+                value={formData.location}
+                onChange={(e) => handleChange("location", e.target.value)}
+                className="w-full border rounded-lg p-2 focus:outline-pink-500"
+                placeholder="Enter the location, e.g., Lahore"
+              />
+            </div>
+
+            {/* Date Range Selector */}
+            <div>
+              <label className="block font-medium text-gray-700">
+                Available Dates
+              </label>
+              <DateRange
+                editableDateInputs={true}
+                onChange={(ranges) => {
+                  let selectedRanges = Object.values(ranges).map((range) => ({
+                    startDate: range.startDate,
+                    endDate: range.endDate,
+                  }));
+                  // If the start and end date of the first range is the same remove that
+                  if (
+                    formData.availableDates.length > 0 &&
+                    formData.availableDates[0].startDate.getTime() ===
+                      formData.availableDates[0].endDate.getTime()
+                  ) {
+                    formData.availableDates = [];
+                  }
+
+                  selectedRanges = [
+                    ...selectedRanges,
+                    ...formData.availableDates,
+                  ];
+                  handleChange("availableDates", selectedRanges);
+                }}
+                moveRangeOnFirstSelection={false}
+                ranges={formData.availableDates}
+              />
+              <p className="text-sm text-gray-500 mt-2">
+                Select one or more date ranges when the property is available.
+              </p>
+            </div>
+
+            {/* Price Input */}
             <div>
               <label className="block font-medium text-gray-700">
                 Price per Night (in USD)
@@ -432,6 +500,7 @@ const PublishListingPage = () => {
             </div>
           </div>
         );
+
       default:
         return (
           <div className="space-y-4">
@@ -441,17 +510,53 @@ const PublishListingPage = () => {
             <p className="text-gray-600">
               Please review your details below before submitting your listing.
             </p>
+
+            {/* Review Section */}
             <div className="border rounded-lg p-4 bg-gray-50 space-y-2">
+              {/* Basic Details */}
               <h3 className="font-medium text-gray-700">Basic Details:</h3>
-              <p>Name: {formData.name}</p>
-              <p>Type: {formData.type}</p>
-              <p>Description: {formData.description}</p>
+              <p>
+                <strong>Name:</strong> {formData.name}
+              </p>
+              <p>
+                <strong>Type:</strong> {formData.type}
+              </p>
+              <p>
+                <strong>Description:</strong> {formData.description}
+              </p>
 
+              {/* Space Details */}
               <h3 className="font-medium text-gray-700 mt-4">Space Details:</h3>
-              <p>Guests: {formData.guests}</p>
-              <p>Bathrooms: {formData.bathrooms}</p>
-              <p>Bedrooms: {formData.bedrooms}</p>
+              <p>
+                <strong>Guests:</strong> {formData.guests}
+              </p>
+              <p>
+                <strong>Bathrooms:</strong> {formData.bathrooms}
+              </p>
+              <p>
+                <strong>Bedrooms:</strong> {formData.bedrooms}
+              </p>
 
+              {/* Location */}
+              <h3 className="font-medium text-gray-700 mt-4">Location:</h3>
+              <p>
+                <strong>Location:</strong> {formData.location}
+              </p>
+
+              {/* Available Dates */}
+              <h3 className="font-medium text-gray-700 mt-4">
+                Available Dates:
+              </h3>
+              <ul className="list-disc pl-5">
+                {formData.availableDates.map((range, index) => (
+                  <li key={index}>
+                    {new Date(range.startDate).toLocaleDateString()} -{" "}
+                    {new Date(range.endDate).toLocaleDateString()}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Amenities */}
               <h3 className="font-medium text-gray-700 mt-4">Amenities:</h3>
               <ul className="list-disc pl-5">
                 {formData.amenities.map((amenity, index) => (
@@ -459,12 +564,18 @@ const PublishListingPage = () => {
                 ))}
               </ul>
 
+              {/* Images */}
               <h3 className="font-medium text-gray-700 mt-4">Images:</h3>
               <p>{formData.images.length} images uploaded.</p>
 
+              {/* Price */}
               <h3 className="font-medium text-gray-700 mt-4">Price:</h3>
-              <p>${formData.price} per night</p>
+              <p>
+                <strong>${formData.price}</strong> per night
+              </p>
             </div>
+
+            {/* Submit Button */}
             <button
               onClick={handleSubmit}
               className="mt-4 px-4 py-2 bg-pink-500 text-white rounded-lg"

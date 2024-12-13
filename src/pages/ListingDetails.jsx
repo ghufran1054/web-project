@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { baseURL } from "../constants/api";
 import PhotoAlbum from "../components/PhotoAlbum";
 import ReserveCard from "../components/ReserveCard";
+import defaultPic from "../assets/react.svg";
 const ListingDetails = () => {
   const { id } = useParams();
   const [listing, setListing] = useState(null);
@@ -46,15 +47,39 @@ const ListingDetails = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
         {/* Left Column: About This Place */}
         <div className="lg:col-span-2">
+          {/* Host Info Section */}
+
+          <div className="flex items-center space-x-4 ">
+            <img
+              src={
+                listing.host.profileImage && listing.host.profileImage !== ""
+                  ? listing.host.profileImage
+                  : defaultPic
+              }
+              alt={listing.host.username}
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            <div className="flex-col items-center">
+              <h2 className="text-2xl font-semibold">
+                Hosted by {listing.host.name}
+              </h2>
+            <p className="text-gray-600 mb-4">{listing.host.email}</p>
+            </div>
+          </div>
+
           {/* About This Place Section */}
           <div className="mb-12">
             <h2 className="text-2xl font-semibold mb-4">About This Place</h2>
-            <p className="text-gray-700 leading-relaxed">{listing.description}</p>
+            <p className="text-gray-700 leading-relaxed">
+              {listing.description}
+            </p>
           </div>
 
           {/* What This Place Offers Section */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">What This Place Offers</h2>
+            <h2 className="text-2xl font-semibold mb-4">
+              What This Place Offers
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
               {listing.amenities.map((amenity, index) => (
                 <div key={index} className="flex items-center space-x-2">
@@ -68,7 +93,7 @@ const ListingDetails = () => {
         {/* Right Column: Reserve Card (Sticky) */}
         <div className="relative">
           <div className="lg:sticky top-80">
-            <ReserveCard pricePerNight={Number(listing.price.slice(1))} />
+            <ReserveCard listing={listing} />
           </div>
         </div>
       </div>

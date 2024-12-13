@@ -22,7 +22,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 router.post('/upload-images/:id', upload.array('images'), listingsController.uploadImages);
 router.post('/new-listing', authMiddleware, listingsController.postNewListing);
-router.get('/', listingsController.getAllListings);
+router.get('/', listingsController.getAllApprovedListings);
 router.get('/:id', listingsController.getListingById);
 router.get('/search', listingsController.searchListings);
+router.get('/host/:hostId', authMiddleware, listingsController.getListingofHostById);
+router.delete('/:id', authMiddleware, listingsController.deleteListingById);
 module.exports = router;

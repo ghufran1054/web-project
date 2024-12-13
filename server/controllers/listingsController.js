@@ -46,10 +46,16 @@ exports.uploadImages = async (req, res) => {
 };
 
 // Get all listings
-exports.getAllListings = async (req, res) => {
+exports.getAllApprovedListings = async (req, res) => {
     try {
         // Fetch all properties from the database
-        const properties = await Property.find();
+        let properties = await Property.find();
+
+        // Filter those properties which have isApproved = true
+        properties = properties.filter(property => property.isApproved);
+
+        // Also Filter those where availableDates is empty
+        properties = properties.filter(property => property.availableDates.length > 0);
         
         // Exclude `allImages`, `amenities`, and `description` from the response
         const listings_filtered = properties.map(({ allImages, amenities, description, ...listing }) => listing._doc);
@@ -61,12 +67,25 @@ exports.getAllListings = async (req, res) => {
     }
 };
 
+exports.getAllListings = async (req, res) => {
+    
+    try {
+        // Fetch all properties from the database
+        const properties = await Property.find();
+        // Exclude `allImages`, `amenities`, and `description` from the response
+        const listings_filtered = properties.map(({ allImages, amenities, description, ...listing }) => listing._doc);
+        res.json(listings_filtered);
+    } catch (error) {
+        console.error("Error fetching listings:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 // Get listing by ID
 exports.getListingById = async (req, res) => {
     const id = req.params.id;
     try {
         // Find the property by ID
-        const listing = await Property.findById(id);
+        const listing = await Property.findById(id).populate('host').exec();
         if (listing) {
             res.json(listing);
         } else {
@@ -106,5 +125,62 @@ exports.searchListings = async (req, res) => {
     } catch (error) {
         console.error("Error searching listings:", error);
         res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+
+exports.getListingofHostById = async (req, res) => {
+    try {
+        // Get host ID from the request parameters
+        const hostId = req.params.hostId;
+
+        // Check if the host ID is provided
+        if (!hostId) {
+            return res.status(400).json({ error: 'Host ID is required' });
+        }
+
+        // Fetch all properties associated with the host ID
+        const listings = await Property.find({ host: hostId });
+
+        // Check if any listings are found
+        if (!listings || listings.length === 0) {
+            return res.status(200).json({ message: 'No listings found for this host' });
+        }
+
+        // Respond with the listings
+        res.status(200).json({ listings });
+    } catch (error) {
+        console.error('Error fetching listings:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+exports.deleteListingById = async (req, res) => {
+    try {
+        // Get the listing ID from the request parameters
+        const listingId = req.params.id;
+
+        // Check if the listing ID is provided
+        if (!listingId) {
+            return res.status(400).json({ error: 'Listing ID is required' });
+        }
+
+        // Find and delete the listing by its ID
+        const deletedListing = await Property.findByIdAndDelete(listingId);
+
+        // If no listing is found, return a 404 error
+        if (!deletedListing) {
+            return res.status(404).json({ message: 'Listing not found' });
+        }
+
+        // Return a success response
+        res.status(200).json({
+            message: 'Listing deleted successfully',
+            deletedListing,
+        });
+    } catch (error) {
+        console.error('Error deleting listing:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };

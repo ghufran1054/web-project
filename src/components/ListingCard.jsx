@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 
 const ListingCard = ({ listing }) => {
+  // Check if our url contains 'admin' in it
+  const isAdmin = window.location.href.includes('admin');
   return (
     <Link 
-      to={`/listings/${listing._id}`}
+      to={isAdmin ? `/admin/listings/${listing._id}` : `/listings/${listing._id}`}
       className="block transform transition duration-200 hover:scale-105"
     >
       <div className="w-full rounded-lg overflow-hidden shadow-lg bg-white hover:shadow-xl"

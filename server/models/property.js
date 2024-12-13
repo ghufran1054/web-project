@@ -22,6 +22,15 @@ const PropertySchema = new mongoose.Schema({
         ref: 'User', 
         required: true, // Ensure every property is linked to a user
     },
+    location: { type: String, required: true },
+    availableDates: [
+        {
+            startDate: { type: Date, required: true },
+            endDate: { type: Date, required: true },
+        }
+    ]
 });
 
 module.exports = mongoose.model('Property', PropertySchema);
+
+

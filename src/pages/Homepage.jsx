@@ -1,7 +1,14 @@
 import ListingsContainer from "../components/Listings";
-import Footer from "../components/Footer";
+import { useContext, useEffect } from "react";
+import { ListingsContext } from "../contexts/listingsContext";
 
 function Homepage() {
+
+  const { fetchListings } = useContext(ListingsContext);
+
+  useEffect(() => {
+    fetchListings();
+  }, []);
   return (
     <>
       <ListingsContainer></ListingsContainer>

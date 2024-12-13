@@ -1,43 +1,37 @@
-import React, { useContext, useState } from "react";
-import SearchBar from "./SearchBar";
-import { AuthContext } from "../contexts/authContext";
-import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import ModalPopup from './ModalPopup';
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import ModalPopup from "./ModalPopup";
 
-const Navbar = () => {
-  // State to check if user is logged in
-  const { isLoggedIn, setIsLoggedIn, logout } = useContext(AuthContext);
+const AdminNavbar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalAction, setModalAction] = useState(null);
+
   // State to toggle the dropdown menu
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const handlePostListing = () => {
-    
-    // Check if the user is logged in
-    if (!isLoggedIn) {
-      navigate("/login");
-    }
-
-    // If the user is logged in, navigate to the post-listing page
-    navigate("/post-listing");
-  }
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState(null);
   const handleAction = () => {
-    if (modalAction == 'logout') {
-      logout();
-    }
+    if (modalAction == "logout") {
+      // Remove admin token from localStorage
+      localStorage.removeItem("adminToken");
+      setModalOpen(false);
 
-    setModalOpen(false);
-  }
+      // Navigate to admin login page
+      navigate("/admin/login");
+    }
+  };
+
+  const handleBookings = () => {
+    navigate("/admin/bookings");
+  };
+
   return (
     <div className="bg-white p-4 border-b-2 flex-col justify-center item-center space-y-4">
       <nav>
         <div className="px-10 flex justify-between items-center">
           {/* Logo on the extreme left */}
           <a
-            href="/"
+            href="/admin/dashboard"
             className="text-black text-2xl font-bold flex flex-1 items-center"
           >
             <svg
@@ -56,34 +50,24 @@ const Navbar = () => {
             airbnb
           </a>
 
-          {/* Center items: Stays and Experiences */}
-          <div className="hidden md:flex justify-center space-x-10 ml-50px flex-1">
-            <button className="text-gray-700 hover:text-black font-semibold">
-              Stays
-            </button>
-            <button className="text-gray-700 hover:text-black font-semibold">
-              Experiences
-            </button>
+          {/* Center text: Admin Dashboard */}
+          <div className="flex justify-center space-x-10 ml-50px flex-1">
+            <h1 className="text-gray-700 text-xl font-semibold">
+              Admin Dashboard
+            </h1>
           </div>
 
-          {/* Right side: Airbnb your home, Language button, Profile and Hamburger dropdown */}
+          {/* Right side: Bookings Button and Dropdown */}
           <div className="flex flex-1 justify-end items-center space-x-4">
-            {/* Airbnb your home button, hidden on small screens */}
-            <button onClick={handlePostListing} className="text-gray-700 hover:text-black font-semibold hidden md:block">
-              Airbnb your home
+            {/* Bookings Button */}
+            <button
+              onClick={handleBookings}
+              className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
+            >
+              Bookings
             </button>
 
-            {/* Language change icon */}
-            <button className="p-2 rounded-full hover:bg-gray-100">
-              <img
-                width="30"
-                height="30"
-                src="https://img.icons8.com/ios/50/globe--v1.png"
-                alt="globe--v1"
-              />
-            </button>
-
-            {/* Profile and Hamburger Menu (Dropdown) */}
+            {/* Profile and Dropdown Menu */}
             <div
               className="relative flex items-center space-x-2 border p-2 rounded-full hover:shadow-md cursor-pointer"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -111,48 +95,34 @@ const Navbar = () => {
               {/* Dropdown Menu */}
               {isDropdownOpen && (
                 <div className="absolute top-14 right-0 w-48 bg-white shadow-lg rounded-lg p-4 z-10">
-                  {isLoggedIn ? (
-                    <>
-                      <button onClick={() => navigate("/profile")} className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
-                        Profile
-                      </button>
-                      <button onClick={() => {setModalOpen(true); setModalAction('logout')}} className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
-                        Log out
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <Link to="/login">
-                        <button className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
-                          Login
-                        </button>
-                      </Link>
-                      <Link to="/signup">
-                        <button className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
-                          Signup
-                        </button>
-                      </Link>
-                    </>
-                  )}
+                  <button
+                    onClick={() => {
+                      setModalAction("logout");
+                      setModalOpen(true);
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md"
+                  >
+                    Log out
+                  </button>
                 </div>
               )}
             </div>
           </div>
         </div>
       </nav>
-
       {/* Modal Popup */}
       <ModalPopup
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onConfirm={handleAction}
-        message={`Are you sure you want to ${modalAction === "logout" ? "logout" : ""}?`}
+        message={`Are you sure you want to ${
+          modalAction === "logout" ? "logout" : ""
+        }?`}
       />
-
-      {/*Conditional rendering of SearchBar */}
+      {/* Conditional rendering of SearchBar */}
       {pathname === "/" && <SearchBar></SearchBar>}
     </div>
   );
 };
 
-export default Navbar;
+export default AdminNavbar;

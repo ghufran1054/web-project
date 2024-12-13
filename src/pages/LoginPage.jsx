@@ -27,7 +27,7 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setAuth({ token: data.token, user: data.user });
+        setAuth({ token: data.token, user: data.userId });
         
         // Redirect to the homepage after successful login
         navigate("/"); // This will take the user to the homepage

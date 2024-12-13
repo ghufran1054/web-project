@@ -16,12 +16,12 @@ export const ListingsProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    fetchListings();
-  }, []);
+  // useEffect(() => {
+  //   fetchListings();
+  // }, []);
 
   return (
-    <ListingsContext.Provider value={{ listings, setListings }}>
+    <ListingsContext.Provider value={{ listings, setListings, fetchListings }}>
       {children}
     </ListingsContext.Provider>
   );

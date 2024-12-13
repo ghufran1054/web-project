@@ -7,6 +7,9 @@ const path = require('path');
 const listingsRoutes = require('./routes/listings');
 const bookingsRoutes = require('./routes/bookings');
 const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
+const userRoutes = require('./routes/user');
+const bookingRoutes = require('./routes/bookings');
 
 const app = express();
 const PORT = 3000;
@@ -19,6 +22,9 @@ app.use(express.static(path.join(__dirname, '')));
 app.use('/api/listings', listingsRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 // MongoDB Connection
 mongoose

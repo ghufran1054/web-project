@@ -1,7 +1,17 @@
 const express = require('express');
-const router = express.Router();
-const bookingsController = require('../controllers/bookingsController');
+const { createBooking, updateBookingStatus, getBookingsofUserbyId, getBookingsonPropertybyId} = require('../controllers/bookingsController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-router.post('/', bookingsController.createBooking);
+const router = express.Router();
+
+// Create a booking - protected route
+router.post('/create', authMiddleware, createBooking);
+
+// Update booking status - protected route
+router.patch('/update-status', authMiddleware, updateBookingStatus);
+
+router.get('/:userId', authMiddleware, getBookingsofUserbyId);
+
+router.get('/property/:propertyId', authMiddleware, getBookingsonPropertybyId);
 
 module.exports = router;
