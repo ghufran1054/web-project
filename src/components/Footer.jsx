@@ -1,9 +1,8 @@
-
 const Footer = () => {
   return (
     <footer className="bg-gray-100 border-t border-gray-200">
       <div className="container mx-auto py-6 px-4">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-gray-700">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-gray-700">
           <div>
             <h4 className="font-bold mb-2">Support</h4>
             <ul>
@@ -42,10 +41,10 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6">
-          <div className="text-gray-500 text-sm">
+          <div className="text-gray-500 text-sm text-center sm:text-left">
             © {new Date().getFullYear()} Airbnb, Inc. All rights reserved.
           </div>
-          <div className="flex space-x-4 mt-2 sm:mt-0">
+          <div className="flex space-x-4 mt-4 sm:mt-0">
             <a href="#" className="text-gray-500 hover:text-gray-800">
               <img 
                 src="https://img.icons8.com/ios-filled/50/000000/facebook-new.png" 

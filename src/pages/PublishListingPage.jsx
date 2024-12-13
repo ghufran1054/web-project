@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { baseURL } from "../constants/api";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // Main stylesheet
 import "react-date-range/dist/theme/default.css"; // Theme stylesheet
+import { toast } from "react-toastify";
 
 const StepAmenities = ({ formData, handleChange }) => {
   const [amenityName, setAmenityName] = useState("");
@@ -93,7 +94,7 @@ const StepAmenities = ({ formData, handleChange }) => {
 
 const PublishListingPage = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
     type: "apartment",
@@ -113,10 +114,20 @@ const PublishListingPage = () => {
     ],
   });
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.dismiss();
+      toast.info("Please login to publish a listing");
+      navigate("/login");
+    }
+  }, []);
   const uploadImages = async (propertyId, images) => {
     const token = localStorage.getItem("token");
 
     if (!token) {
+      toast.info("Please login to publish a listing");
+
       navigate("/login");
       return;
     }
@@ -139,6 +150,7 @@ const PublishListingPage = () => {
       );
 
       if (response.status === 401) {
+        toast.info("Please login to publish a listing");
         navigate("/login");
         return;
       }
@@ -160,6 +172,8 @@ const PublishListingPage = () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
+      toast.info("Please login to publish a listing");
+
       navigate("/login");
       return;
     }
@@ -184,6 +198,8 @@ const PublishListingPage = () => {
       });
 
       if (response.status === 401) {
+        toast.info("Please login to publish a listing");
+
         navigate("/login");
         return;
       }

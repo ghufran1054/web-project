@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { baseURL } from "../constants/api";
 import PhotoAlbum from "../components/PhotoAlbum";
 import ModalPopup from "../components/ModalPopup";
+import defaultPic from "../assets/react.svg";
 
 const AdminListingDetails = () => {
   const navigate = useNavigate();
@@ -105,27 +106,27 @@ const AdminListingDetails = () => {
 
       {/* Two-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
-        {/* Host Info Section */}
-
-        <div className="flex items-center space-x-4 ">
-          <img
-            src={
-              listing.host.profileImage && listing.host.profileImage !== ""
-                ? listing.host.profileImage
-                : defaultPic
-            }
-            alt={listing.host.username}
-            className="w-12 h-12 rounded-full object-cover"
-          />
-          <div className="flex-col items-center">
-            <h2 className="text-2xl font-semibold">
-              Hosted by {listing.host.name}
-            </h2>
-            <p className="text-gray-600 mb-4">{listing.host.email}</p>
-          </div>
-        </div>
         {/* Left Column: About This Place */}
         <div className="lg:col-span-2">
+          {/* Host Info Section */}
+
+          <div className="flex items-center space-x-4 ">
+            <img
+              src={
+                listing.host.profileImage && listing.host.profileImage !== ""
+                  ? listing.host.profileImage
+                  : defaultPic
+              }
+              alt={listing.host.username}
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            <div className="flex-col items-center">
+              <h2 className="text-2xl font-semibold">
+                Hosted by {listing.host.name}
+              </h2>
+              <p className="text-gray-600 mb-4">{listing.host.email}</p>
+            </div>
+          </div>
           {/* About This Place Section */}
           <div className="mb-12">
             <h2 className="text-2xl font-semibold mb-4">About This Place</h2>

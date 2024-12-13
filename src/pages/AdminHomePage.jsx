@@ -4,7 +4,7 @@ import AdminListingsContainer from "../components/AdminListings";
 import { useNavigate } from "react-router-dom";
 function AdminHomepage() {
 
-    const { fetchListings } = useContext(ListingsContext);
+    const { fetchListingsAdmin } = useContext(ListingsContext);
     const adminToken = localStorage.getItem("adminToken");
     const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ function AdminHomepage() {
     }
 
     useEffect(() => {
-      fetchListings();
+      fetchListingsAdmin();
     }, []);
   return (
     <>

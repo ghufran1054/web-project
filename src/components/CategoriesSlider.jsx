@@ -1,9 +1,8 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-const CategoriesSlider = ({ categories }) => {
+const CategoriesSlider = ({ categories, activeCategoryIndex, setActiveCategoryIndex }) => {
   const containerRef = useRef(null);
-  const [activeCategoryIndex, setActiveCategoryIndex] = useState(-1);
 
   // Function to scroll the categories to the right
   const scrollRight = () => {
@@ -47,13 +46,20 @@ const CategoriesSlider = ({ categories }) => {
           >
             {categories.map((category, index) => (
               <div key={index} className="min-w-max">
-                <button onClick={() => setActiveCategoryIndex(index)}
+                <button onClick={() => {
+                  if (index === activeCategoryIndex) {
+                    setActiveCategoryIndex(-1);
+                  }
+                  else
+                    setActiveCategoryIndex(index);
+                }}
                   className={`catButton flex flex-col items-center text-gray-700 py-2 px-4 ${
                     index === activeCategoryIndex ? 'bg-gray-200 rounded-lg' : ''
                   }`}
                   style={{ width: '100px' }}
                 >
-                  <span className="text-2xs">{category.icon}</span>
+
+                  <img src={"src/assets/icons/" + category.icon} height={24} width={24}/>
                   <span className="mt-1 text-xs">{category.name}</span>
                 </button>
               </div>

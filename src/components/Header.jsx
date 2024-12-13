@@ -2,7 +2,7 @@ import Navbar from "./Navbar";
 import CategoriesSlider from "./CategoriesSlider";
 import { useLocation } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
-const Header = ({ categories }) => {
+const Header = () => {
   const location = useLocation();
   const isAdmin = window.location.href.includes("admin");
   return (
@@ -12,10 +12,6 @@ const Header = ({ categories }) => {
       ) : (
         <>
           <Navbar />
-          {/* Conditionally render the CategoriesSlider based on the current route */}
-          {location.pathname === "/" && (
-            <CategoriesSlider categories={categories} />
-          )}
         </>
       )}
     </div>

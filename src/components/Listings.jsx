@@ -1,9 +1,8 @@
-import ListingCard from './ListingCard';
-import { useEffect, useState, useContext } from 'react';
-import { ListingsContext } from '../contexts/listingsContext';
+import ListingCard from "./ListingCard";
+import { useEffect, useState, useContext } from "react";
+import { ListingsContext } from "../contexts/listingsContext";
 
-
-const ListingsContainer = () => {
+const ListingsContainer = ({ activeCategory }) => {
   const { listings, setListings } = useContext(ListingsContext);
   const [loading, setLoading] = useState(true);
 
@@ -13,7 +12,7 @@ const ListingsContainer = () => {
     } else {
       setLoading(false);
     }
-  } , [listings]);
+  }, [listings]);
 
   if (loading) {
     return (
@@ -26,9 +25,13 @@ const ListingsContainer = () => {
   return (
     <div className="flex flex-col items-center py-4 px-4 h-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-screen-xl">
-        {listings.map((listing, index) => (
-          <ListingCard key={index} listing={listing} />
-        ))}
+        {listings.map((listing, index) => {
+          if (
+            listing.type.toLowerCase().includes(activeCategory.toLowerCase())
+          ) {
+            return <ListingCard key={index} listing={listing} />;
+          }
+        })}
       </div>
     </div>
   );

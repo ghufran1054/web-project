@@ -95,13 +95,13 @@ const ListingSection = ({ listings, setListings }) => {
       {listings.length === 0 ? (
         <div className="text-gray-500 text-center">You have no listings.</div>
       ) : (
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {listings.map((listing) => (
             <div
               key={listing._id}
-              className="p-4 border rounded-md shadow-sm bg-white"
+              className="p-4 border rounded-md shadow-sm bg-white flex flex-col"
             >
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-4">
                   <img
                     src={listing.image || "/default-property.png"}
@@ -113,11 +113,16 @@ const ListingSection = ({ listings, setListings }) => {
                     <p className="text-sm text-gray-500">
                       Guests: {listing.guests} | Price: {listing.price}
                     </p>
-                    <div>
                     <p className="text-sm text-gray-500">
-                      Status: <span style={{ color: listing.isApproved ? "green" : "brown" }}>{listing.isApproved ? "Approved" : "Pending"}</span>
+                      Status:{" "}
+                      <span
+                        style={{
+                          color: listing.isApproved ? "green" : "brown",
+                        }}
+                      >
+                        {listing.isApproved ? "Approved" : "Pending"}
+                      </span>
                     </p>
-                  </div>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -126,7 +131,7 @@ const ListingSection = ({ listings, setListings }) => {
                       setSelectedListing(listing);
                       fetchBookings(listing._id);
                     }}
-                    className="text-blue-500 hover:underline"
+                    className="text-blue-500 hover:underline text-sm md:text-base"
                   >
                     View Bookings
                   </button>
@@ -135,7 +140,7 @@ const ListingSection = ({ listings, setListings }) => {
                       setSelectedListing(listing);
                       setIsModalOpen(true);
                     }}
-                    className="text-red-500 hover:underline"
+                    className="text-red-500 hover:underline text-sm md:text-base"
                   >
                     Delete
                   </button>
@@ -181,7 +186,7 @@ const ListingSection = ({ listings, setListings }) => {
                                 onClick={() =>
                                   handleStatusChange(booking._id, "confirmed")
                                 }
-                                className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                                className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-sm"
                               >
                                 Confirm
                               </button>
@@ -189,7 +194,7 @@ const ListingSection = ({ listings, setListings }) => {
                                 onClick={() =>
                                   handleStatusChange(booking._id, "cancelled")
                                 }
-                                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
                               >
                                 Cancel
                               </button>

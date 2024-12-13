@@ -11,12 +11,11 @@ const ProfilePage = () => {
   const [user, setUser] = useState({});
   const [listings, setListings] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // For mobile sidebar toggle
 
   useEffect(() => {
-    // Fetch user details
     const userId = localStorage.getItem("user");
 
-    // Get the user by making a fetch get request
     const fetchUser = async () => {
       try {
         const response = await fetch(`${baseURL}/users/${userId}`, {
@@ -37,7 +36,6 @@ const ProfilePage = () => {
       }
     };
 
-    // Fetch listings dynamically
     const fetchListings = async () => {
       try {
         const response = await fetch(`${baseURL}/listings/host/${userId}`, {
@@ -52,10 +50,7 @@ const ProfilePage = () => {
         }
 
         const data = await response.json();
-        if (
-          data.message &&
-          data.message === "No listings found for this host"
-        ) {
+        if (data.message && data.message === "No listings found for this host") {
           setListings([]);
         } else {
           setListings(data.listings);
@@ -79,10 +74,7 @@ const ProfilePage = () => {
         }
 
         const data = await response.json();
-        if (
-          data.message &&
-          data.message === "No bookings found for this user"
-        ) {
+        if (data.message && data.message === "No bookings found for this user") {
           setBookings([]);
         } else {
           setBookings(data.bookings);
@@ -91,6 +83,7 @@ const ProfilePage = () => {
         toast.error(error.message || "Error fetching bookings.");
       }
     };
+
     if (userId) {
       fetchListings();
       fetchUser();
@@ -99,13 +92,27 @@ const ProfilePage = () => {
   }, [user._id]);
 
   return (
-    <div className="flex h-screen">
-      <Sidebar
-        sections={["Profile", "Bookings", "Listings"]}
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-      />
-      <div className="w-3/4 p-4">
+    <div className="flex flex-col min-h-screen lg:flex-row">
+      {/* Sidebar */}
+      <div className={`lg:w-1/4 bg-gray-100 p-4 ${isSidebarOpen ? 'block' : 'hidden lg:block'}`}>
+        <Sidebar
+          sections={["Profile", "Bookings", "Listings"]}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+        />
+      </div>
+
+      {/* Content Area */}
+      <div className="flex-1 p-4">
+        <div className="lg:hidden mb-4">
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="text-xl text-gray-700 focus:outline-none"
+          >
+            ☰
+          </button>
+        </div>
+
         {activeSection === "Profile" && <ProfileSection user={user} />}
         {activeSection === "Bookings" && <BookingsSection bookings={bookings} setBookings={setBookings} />}
         {activeSection === "Listings" && (

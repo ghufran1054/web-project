@@ -3,7 +3,7 @@ import React from 'react';
 const Sidebar = ({ sections, activeSection, setActiveSection }) => {
 
   return (
-    <div className="w-1/4 h-full bg-gray-200 p-4">
+    <div className="h-full bg-gray-200 p-4">
       <ul>
         {sections.map((section) => (
           <li

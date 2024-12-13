@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import "./index.css";
 import Homepage from "./pages/Homepage";
 import { ListingsProvider } from "./contexts/listingsContext";
@@ -15,7 +20,7 @@ import AdminLogin from "./pages/AdminLoginPage";
 import AdminHomepage from "./pages/AdminHomePage";
 import AdminListingDetails from "./components/AdminListingDetail";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import ProfilePage from "./pages/ProfilePage";
 
 // Function to check if the current route matches the specified list
@@ -24,37 +29,25 @@ const AppContent = () => {
   const excludeRoutes = ["/login", "/signup", "/admin/login"]; // List of routes to exclude header and footer
   const isExcludedRoute = excludeRoutes.includes(location.pathname);
 
-  // Sample categories list with placeholder icons
-  const categories = [
-    { name: "Stays", icon: "🏡" },
-    { name: "Experiences", icon: "🎉" },
-    { name: "Online Experiences", icon: "💻" },
-    { name: "Restaurants", icon: "🍽️" },
-    { name: "Cafes", icon: "☕" },
-    { name: "Attractions", icon: "🎢" },
-    { name: "Events", icon: "🎟️" },
-    { name: "Tours", icon: "🗺️" },
-    { name: "Adventure", icon: "🏞️" },
-    { name: "Getaways", icon: "🏖️" },
-  ];
-
   return (
     <>
       {/* Conditionally render the Header and Footer based on the current route */}
-      {!isExcludedRoute && <Header categories={categories}></Header>}
+      {!isExcludedRoute && <Header></Header>}
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/listings/:id" element={<ListingDetails />} />
         <Route path="/book/:id" element={<BookingPage />} />
-        <Route path="/signup" element={<Signup />} /> 
-        <Route path="/login" element={<Login />} /> 
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/post-listing" element={<PublishListingPage />} />
-        <Route path='/profile' element={<ProfilePage/>}></Route>
-        <Route path='/admin/login' element={<AdminLogin />} />
-        <Route path='/admin/dashboard' element={<AdminHomepage />}></Route>
-        <Route path='/admin/listings/:id' element={<AdminListingDetails/>}></Route>
-
+        <Route path="/profile" element={<ProfilePage />}></Route>
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminHomepage />}></Route>
+        <Route
+          path="/admin/listings/:id"
+          element={<AdminListingDetails />}
+        ></Route>
       </Routes>
       {/* Conditionally render Footer */}
       {!isExcludedRoute && <Footer></Footer>}
@@ -64,13 +57,13 @@ const AppContent = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <ListingsProvider>
-        <Router>
+    <Router>
+      <AuthProvider>
+        <ListingsProvider>
           <AppContent />
-        </Router>
-      </ListingsProvider>
-    </AuthProvider>
+        </ListingsProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

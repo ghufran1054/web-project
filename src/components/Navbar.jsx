@@ -73,16 +73,6 @@ const Navbar = () => {
               Airbnb your home
             </button>
 
-            {/* Language change icon */}
-            <button className="p-2 rounded-full hover:bg-gray-100">
-              <img
-                width="30"
-                height="30"
-                src="https://img.icons8.com/ios/50/globe--v1.png"
-                alt="globe--v1"
-              />
-            </button>
-
             {/* Profile and Hamburger Menu (Dropdown) */}
             <div
               className="relative flex items-center space-x-2 border p-2 rounded-full hover:shadow-md cursor-pointer"
@@ -118,6 +108,9 @@ const Navbar = () => {
                       </button>
                       <button onClick={() => {setModalOpen(true); setModalAction('logout')}} className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
                         Log out
+                      </button>
+                      <button onClick={() => navigate('/post-listing')} className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
+                        AirBnB your home
                       </button>
                     </>
                   ) : (
