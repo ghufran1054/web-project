@@ -5,6 +5,7 @@ import { baseURL } from "../constants/api";
 import PhotoAlbum from "../components/PhotoAlbum";
 import ModalPopup from "../components/ModalPopup";
 import defaultPic from "../assets/react.svg";
+import { toast } from "react-toastify";
 
 const AdminListingDetails = () => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const AdminListingDetails = () => {
       }
     } catch (error) {
       console.error("Error performing action:", error);
-      alert("An error occurred. Please try again.");
+      toast.error(error.message || "Error performing action.");
     } finally {
       setModalOpen(false);
       setModalAction(null);

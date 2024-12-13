@@ -16,8 +16,6 @@ exports.createBooking = async (req, res) => {
 
     // If the req.userId and property.host are same then return an error message saying you cannot book your own property
 
-    console.log(req.user.id);
-    console.log();
     if (req.user.id === String(property.host._id)) {
       return res.status(400).json({ message: 'You cannot book your own property' });
     }
@@ -163,7 +161,6 @@ exports.updateBookingStatus = async (req, res) => {
   if (!['confirmed', 'cancelled'].includes(status)) {
     return res.status(400).json({ message: 'Invalid status' });
   }
-  console.log(bookingId, status);
 
   try {
     // Find the booking by ID

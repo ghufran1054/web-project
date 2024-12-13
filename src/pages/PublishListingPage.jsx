@@ -12,7 +12,7 @@ const StepAmenities = ({ formData, handleChange }) => {
 
   const addAmenity = () => {
     if (!amenityName) {
-      alert("Please enter an amenity name.");
+      toast.warning("Please enter an amenity name.");
       return;
     }
 
@@ -106,12 +106,7 @@ const PublishListingPage = () => {
     images: [],
     price: "",
     location: "",
-    availableDates: [
-      {
-        startDate: new Date(),
-        endDate: new Date(),
-      },
-    ],
+    availableDates: [],
   });
 
   useEffect(() => {
@@ -165,7 +160,7 @@ const PublishListingPage = () => {
       // Optionally, update the UI with the uploaded images or redirect to another page
     } catch (error) {
       console.error("Error uploading images:", error);
-      alert("Something went wrong while uploading images. Please try again.");
+      toast.error(error.message || "Error uploading images.");
     }
   };
   const postListing = async (formData) => {
@@ -193,7 +188,9 @@ const PublishListingPage = () => {
           guests: Number(formData.guests),
           bathrooms: Number(formData.bathrooms),
           bedrooms: Number(formData.bedrooms),
-          price: formData.price,
+          price: "$" + formData.price,
+          location: formData.location,
+          availableDates: formData.availableDates,
         }),
       });
 
@@ -212,21 +209,19 @@ const PublishListingPage = () => {
       const propertyId = data._id;
 
       // Now upload images using the propertyId
-      uploadImages(propertyId, formData.images);
+      await uploadImages(propertyId, formData.images);
+      toast.success("Property posted successfully!");
+      navigate("/");
     } catch (error) {
       console.error("Error posting the property:", error);
-      alert(
-        "Something went wrong while posting the property. Please try again."
-      );
+      toast.error(error.message || "Error posting the property.");
     }
+
   };
   const handleFileUpload = (e) => {
     const files = Array.from(e.target.files);
-    if (files.length < 5) {
-      alert("Please upload at least 5 images.");
-    } else {
-      handleChange("images", files);
-    }
+    const allFiles = [...formData.images, ...files];
+    handleChange("images", allFiles);
   };
   let nextDisabled = false;
   const handleNext = () => setStep((prev) => prev + 1);
@@ -478,14 +473,6 @@ const PublishListingPage = () => {
                     startDate: range.startDate,
                     endDate: range.endDate,
                   }));
-                  // If the start and end date of the first range is the same remove that
-                  if (
-                    formData.availableDates.length > 0 &&
-                    formData.availableDates[0].startDate.getTime() ===
-                      formData.availableDates[0].endDate.getTime()
-                  ) {
-                    formData.availableDates = [];
-                  }
 
                   selectedRanges = [
                     ...selectedRanges,
@@ -494,7 +481,16 @@ const PublishListingPage = () => {
                   handleChange("availableDates", selectedRanges);
                 }}
                 moveRangeOnFirstSelection={false}
-                ranges={formData.availableDates}
+                ranges={
+                  formData.availableDates.length == 0
+                    ? [
+                        {
+                          startDate: new Date(),
+                          endDate: new Date(),
+                        },
+                      ]
+                    : formData.availableDates
+                }
               />
               <p className="text-sm text-gray-500 mt-2">
                 Select one or more date ranges when the property is available.
@@ -576,7 +572,7 @@ const PublishListingPage = () => {
               <h3 className="font-medium text-gray-700 mt-4">Amenities:</h3>
               <ul className="list-disc pl-5">
                 {formData.amenities.map((amenity, index) => (
-                  <li key={index}>{amenity.name}</li>
+                  <li key={index}>{amenity.amenity}</li>
                 ))}
               </ul>
 

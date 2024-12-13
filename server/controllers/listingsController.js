@@ -33,7 +33,7 @@ exports.uploadImages = async (req, res) => {
       }
 
       // Append remaining images to allImages
-      property.allImages = [...property.allImages];
+      property.allImages = [...imagePaths.slice(1)];
 
       // Save the property
       await property.save();
@@ -82,7 +82,6 @@ exports.getAllListings = async (req, res) => {
 }
 // Get listing by ID
 exports.getListingById = async (req, res) => {
-    console.log("HELLO");
     const id = req.params.id;
     try {
         // Find the property by ID
