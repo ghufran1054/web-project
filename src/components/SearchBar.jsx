@@ -1,4 +1,7 @@
-import { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ListingsContext } from "../contexts/listingsContext"; // Import the context
+import { useNavigate } from "react-router-dom";
+
 
 const SearchBar = () => {
   // State management for each input field
@@ -7,12 +10,27 @@ const SearchBar = () => {
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(1);
 
+  const { searchListings } = useContext(ListingsContext);
+
+  const navigate = useNavigate();
+
   // Handle input changes
   const handleLocationChange = (e) => setLocation(e.target.value);
   const handleCheckInChange = (e) => setCheckIn(e.target.value);
   const handleCheckOutChange = (e) => setCheckOut(e.target.value);
   const handleGuestsChange = (e) => setGuests(e.target.value);
 
+  const handleSearch = async () => {
+
+    // if all fields are empty don't do anything
+    if (!location && !checkIn && !checkOut && !guests) {
+      return;
+    }
+    await searchListings(location, checkIn, checkOut, guests); // Use searchListings from context
+
+    // Redirect to the search results page
+    navigate("/search-results");
+  };
   return (
     <div className="bg-white shadow-md rounded-full px-5 py-3 flex lg:flex-row items-center justify-between max-w-4xl mx-auto border-2 border-solid">
       {/* Inputs for mobile */}
@@ -69,7 +87,10 @@ const SearchBar = () => {
       </div>
 
       {/* Search Button (Always at the End) */}
-      <button className="bg-red-500 text-white p-3 rounded-full shadow-md hover:bg-red-600 transition duration-200">
+      <button
+        className="bg-red-500 text-white p-3 rounded-full shadow-md hover:bg-red-600 transition duration-200"
+        onClick={handleSearch}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"

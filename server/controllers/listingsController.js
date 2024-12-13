@@ -82,6 +82,7 @@ exports.getAllListings = async (req, res) => {
 }
 // Get listing by ID
 exports.getListingById = async (req, res) => {
+    console.log("HELLO");
     const id = req.params.id;
     try {
         // Find the property by ID
@@ -113,21 +114,51 @@ exports.postNewListing = async (req, res) => {
     }
 };
 
-// Search listings by location
-exports.searchListings = async (req, res) => {
-    const query = req.query.query.toLowerCase();
+exports.searchProperties = async (req, res) => {
     try {
-        // Search listings where the `location` field matches the query
-        const filteredListings = await Property.find({
-            location: { $regex: query, $options: "i" }, // Case-insensitive search
-        });
-        res.json(filteredListings);
+      const { location, checkIn, checkOut, guests } = req.query;
+  
+      // Parse checkIn and checkOut dates
+      const checkInDate = checkIn ? new Date(checkIn) : null;
+      const checkOutDate = checkOut ? new Date(checkOut) : null;
+  
+      // Build the query object dynamically
+      const query = {};
+  
+      // Add location filter if provided
+      if (location) {
+        query.location = { $regex: new RegExp(location, 'i') }; // Case-insensitive partial match
+      }
+  
+      // Add guest filter if provided
+      if (guests) {
+        query.guests = { $gte: parseInt(guests, 10) };
+      }
+  
+      // Add availability filter if dates are provided
+      if (checkInDate && checkOutDate) {
+        query.availableDates = {
+          $elemMatch: {
+            startDate: { $lt: checkOutDate },
+            endDate: { $gt: checkInDate },
+          },
+        };
+      }
+  
+      // Add isApproved filter
+      query.isApproved = true;
+  
+      // Fetch properties based on query
+      const properties = await Property.find(query);
+  
+      // Send response
+      return res.status(200).json({ success: true, data: properties });
     } catch (error) {
-        console.error("Error searching listings:", error);
-        res.status(500).json({ message: "Internal server error" });
+      console.error('Error in searchProperties:', error);
+      return res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
-};
-
+  };
+  
 
 exports.getListingofHostById = async (req, res) => {
     try {

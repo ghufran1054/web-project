@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { ListingsContext } from "../contexts/listingsContext";
 
 const ListingsContainer = ({ activeCategory }) => {
-  const { listings, setListings } = useContext(ListingsContext);
+  const { listings, setListings  } = useContext(ListingsContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

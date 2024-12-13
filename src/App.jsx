@@ -22,6 +22,7 @@ import AdminListingDetails from "./components/AdminListingDetail";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfilePage from "./pages/ProfilePage";
+import SearchResultsPage from "./pages/SearchResultPage";
 
 // Function to check if the current route matches the specified list
 const AppContent = () => {
@@ -42,6 +43,7 @@ const AppContent = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/post-listing" element={<PublishListingPage />} />
         <Route path="/profile" element={<ProfilePage />}></Route>
+        <Route path='/search-results' element={<SearchResultsPage />}></Route>
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminHomepage />}></Route>
         <Route
